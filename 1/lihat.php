@@ -4,18 +4,19 @@ session_start();
 include "../koneksi.php";
 include "auth_user.php";
 
+$id	= $_GET["id"];
 
-$queryangkutan = mysqli_query ($konek, "SELECT noken, po, supir, kp, DATE_FORMAT(uji, '%d-%m-%Y')as uji, 
-	naik, turun, kel FROM angkutan");
-if($queryangkutan == false){
-		die ("Terjadi Kesalahan : ". mysqli_error($konek));
-	}
-$angkutan = mysqli_fetch_array ($queryangkutan);	
+
+$queryangkutan = mysqli_query($konek, "SELECT * FROM angkutan WHERE id='$id'");
+if ($queryangkutan == false) {
+	die("Terjadi Kesalahan : " . mysqli_error($konek));
+}
+$angkutan = mysqli_fetch_array($queryangkutan);
 
 ?>
 
 <script type="text/javascript">
-	$(function () {
+	$(function() {
 		$(".datepicker").datepicker({
 			format: 'yyyy-mm-dd',
 			autoclose: true,
@@ -32,15 +33,15 @@ $angkutan = mysqli_fetch_array ($queryangkutan);
 	<title>Terminal Pasirhayam</title>
 	<!-- Library CSS -->
 	<?php
-		include "bundle_css.php";
+	include "bundle_css.php";
 	?>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 		<?php
-        include 'content_header.php';
-       ?>
+		include 'content_header.php';
+		?>
 		<!-- Left side column. contains the logo and sidebar -->
 		<aside class="main-sidebar">
 			<!-- sidebar: style can be found in sidebar.less -->
@@ -59,7 +60,7 @@ $angkutan = mysqli_fetch_array ($queryangkutan);
 					</li>
 					<li><a href="index.php"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
 					<li class="active"><a href="dosen.php"><i class="fa fa-user"></i><span>Angkutan</span></a></li>
-					<li class="active"><a href="#"><i class="fa fa-user"></i><span>Report</span></a></li>
+					<!--li><a href="report.php"><i class="fa fa-print"></i><span>Report</span></a></li-->
 					<li><a href="#"><i class="fa fa-user-circle-o"></i><span>User</span></a></li>
 			</section>
 			<!-- /.sidebar -->
@@ -84,69 +85,82 @@ $angkutan = mysqli_fetch_array ($queryangkutan);
 						<div class="box">
 							<div class="box-header">
 
-								<table border="10" width="100%"
-									class="table table-bordered table-striped table-scalable">
+								<table border="10" width="100%" class="table table-bordered table-striped table-scalable">
 									<thead>
 										<tr>
 											<td>No. Kendaraan</td>
 											<td>
 												<center>:</center>
 											</td>
-											<td><?php echo"$angkutan[noken]";?></td>
+											<td><?php echo "$angkutan[noken]"; ?></td>
 										</tr>
 										<tr>
 											<td>Perusahaan PO</td>
 											<td>
 												<center>:</center>
 											</td>
-											<td><?php echo"$angkutan[po]";?></td>
+											<td><?php echo "$angkutan[po]"; ?></td>
 										</tr>
 										<tr>
 											<td>Nama Sopir</td>
 											<td>
 												<center>:</center>
 											</td>
-											<td><?php echo"$angkutan[supir]";?></td>
+											<td><?php echo "$angkutan[supir]"; ?></td>
 										</tr>
 										<tr>
 											<td>Kartu Pengawas</td>
 											<td>
 												<center>:</center>
 											</td>
-											<td><?php echo"$angkutan[kp]";?></td>
+											<td><?php echo "$angkutan[kp]"; ?></td>
 										</tr>
 										<tr>
 											<td>Masa Berlaku Uji</td>
 											<td>
 												<center>:</center>
 											</td>
-											<td><?php echo"$angkutan[uji]";?></td>
+											<td><?php echo "$angkutan[uji]"; ?></td>
 										</tr>
 										<tr>
 											<td>Penumpang Naik</td>
 											<td>
 												<center>:</center>
 											</td>
-											<td><?php echo"$angkutan[naik]";?></td>
+											<td><?php echo "$angkutan[naik]"; ?></td>
 										</tr>
 										<tr>
 											<td>Penumpang Turun</td>
 											<td>
 												<center>:</center>
 											</td>
-											<td><?php echo"$angkutan[turun]";?></td>
+											<td><?php echo "$angkutan[turun]"; ?></td>
+										</tr>
+										<tr>
+											<td>Jumlah Penumpang</td>
+											<td>
+												<center>:</center>
+											</td>
+											<td><?php echo "$angkutan[jml]"; ?></td>
 										</tr>
 										<tr>
 											<td>Kelengkapan</td>
 											<td>
 												<center>:</center>
 											</td>
-											<td><?php echo"$angkutan[kel]";?></td>
+											<td><?php echo "$angkutan[kel]"; ?></td>
+										</tr>
+
+										<tr>
+											<td>Tanggal Input</td>
+											<td>
+												<center>:</center>
+											</td>
+											<td><?php echo "$angkutan[tgl]"; ?></td>
 										</tr>
 
 
-										<p class="page-header"><a href="dosen.php"><button
-													class="btn btn-default">Kembali</button></a>
+										<p class="page-header"><a href="dosen.php"><button class="btn btn-default">Kembali</button></a>
 
 									</thead>
 
@@ -159,8 +173,8 @@ $angkutan = mysqli_fetch_array ($queryangkutan);
 	</div>
 
 	<?php
-		//include	"content_footer.php";
-		include "bundle_script.php";
+	//include	"content_footer.php";
+	include "bundle_script.php";
 	?>
 
 </body>

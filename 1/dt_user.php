@@ -1,13 +1,14 @@
 				<thead>
 					<tr>
+						<th>Nama</th>
 						<th>Username</th>
 						<th>Usergroup</th>
-						<th>Action</th>
+						<th>action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-						$queryuser = mysqli_query ($konek, "SELECT Id_User, Username, Id_Usergroup_User, Id_Usergroup, Nama_Usergroup FROM user INNER JOIN usergroup ON Id_Usergroup_User=Id_Usergroup");
+						$queryuser = mysqli_query ($konek, "SELECT Id_User, Username, nama, Id_Usergroup_User, Id_Usergroup, Nama_Usergroup, Password FROM user INNER JOIN usergroup ON Id_Usergroup_User=Id_Usergroup");
 						if($queryuser == false){
 							die ("Terjadi Kesalahan : ". mysqli_error($konek));
 						}
@@ -15,16 +16,17 @@
 							
 							echo "
 								<tr>
+									<td>$user[nama]</td>
 									<td>$user[Username]</td>
 									<td>$user[Nama_Usergroup]</td>
 									<td>
 								";
 								if($user["Id_User"]==$_SESSION["Id_User"]){
-									echo "
-										<a href='#'>Disable</a>";
+								echo "
+									<a href='#'>Disable</a>";
 								}else{
 									echo "
-										<a href='#' onclick='confirm_delete(\"user_delete.php?Id_User=$user[Id_User]\")'>Delete</a>";
+										<a href='#' onClick='confirm_delete(\"user_delete.php?Id_User=$user[Id_User]\")'>Delete</a>";
 								}
 							echo
 								"
